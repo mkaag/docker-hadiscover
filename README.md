@@ -4,13 +4,12 @@ This repository contains the **Dockerfile** and the configuration files of [Hapr
 
 ### Base Docker Image
 
-* [phusion/baseimage](https://github.com/phusion/baseimage-docker)
-* [including image's enhancement from Paul Querna](https://github.com/racker/docker-ubuntu-with-updates)
+* [phusion/baseimage](https://github.com/phusion/baseimage-docker), the *minimal Ubuntu base image modified for Docker-friendliness*...
+* ...[including image's enhancement](https://github.com/racker/docker-ubuntu-with-updates) from [Paul Querna](https://journal.paul.querna.org/articles/2013/10/15/docker-ubuntu-on-rackspace/)
 
 ### Installation
 
-1. Install [Docker](https://www.docker.com)
-2. Build an image from Dockerfile: `docker build -t mkaag/hadiscover github.com/mkaag/docker-hadiscover
+`docker build -t mkaag/hadiscover github.com/mkaag/docker-hadiscover`
 
 ### Usage
 
