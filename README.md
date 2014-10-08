@@ -1,34 +1,20 @@
-## Haproxy Dockerfile
+## hadiscover Dockerfile
 
-
-This repository contains **Dockerfile** of [Haproxy](http://haproxy.1wt.eu/) for [Docker](https://www.docker.com/)'s [automated build](https://registry.hub.docker.com/u/dockerfile/haproxy/) published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
-
+This repository contains the **Dockerfile** and the configuration files of [Haproxy](http://haproxy.1wt.eu/) and [hadiscover](https://github.com/adetante/hadiscover) for [Docker](https://www.docker.com/).
 
 ### Base Docker Image
 
-* [dockerfile/ubuntu](http://dockerfile.github.io/#/ubuntu)
-
+* [phusion/baseimage](https://github.com/phusion/baseimage-docker)
+* [including image's enhancement from Paul Querna](https://github.com/racker/docker-ubuntu-with-updates)
 
 ### Installation
 
-1. Install [Docker](https://www.docker.com/).
-
-2. Download [automated build](https://registry.hub.docker.com/u/dockerfile/haproxy/) from public [Docker Hub Registry](https://registry.hub.docker.com/): `docker pull dockerfile/haproxy`
-
-   (alternatively, you can build an image from Dockerfile: `docker build -t="dockerfile/haproxy" github.com/dockerfile/haproxy`)
-
+1. Install [Docker](https://www.docker.com)
+2. Build an image from Dockerfile: `docker build -t mkaag/hadiscover github.com/mkaag/docker-hadiscover
 
 ### Usage
 
-    docker run -d -p 80:80 dockerfile/haproxy
-
-#### Customizing Haproxy
-
-    docker run -d -p 80:80 -v <override-dir>:/haproxy-override dockerfile/haproxy
-
-where `<override-dir>` is an absolute path of a directory that could contain:
-
-  - `haproxy.cfg`: custom config file (replace `/dev/log` with `127.0.0.1`, and comment out `daemon`)
-  - `errors/`: custom error responses
-
-After few seconds, open `http://<host>` to see the haproxy stats page.
+   TODO once stable
+   
+### Customization
+   TODO once stable
