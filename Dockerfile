@@ -45,7 +45,7 @@ RUN mkdir /etc/service/hadiscover
 ADD build/hadiscover.sh /etc/service/hadiscover/run
 RUN chmod +x /etc/service/hadiscover/run
 
-EXPOSE 80 443 8080 8443
+EXPOSE 80
 # End Haproxy
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
