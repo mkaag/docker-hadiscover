@@ -25,22 +25,27 @@ CMD ["/sbin/my_init"]
 
 # Haproxy Installation
 RUN \
-  sed -i 's/^# \(.*-backports\s\)/\1/g' /etc/apt/sources.list && \
-  apt-get -qqy update && \
-  apt-get install -qqy haproxy=1.5.3-1~ubuntu14.04.1 && \
-  sed -i 's/^ENABLED=.*/ENABLED=1/' /etc/default/haproxy
+    sed -i 's/^# \(.*-backports\s\)/\1/g' /etc/apt/sources.list && \
+    apt-get update -qqy; \
+    apt-get install -qqy \
+        haproxy \
+        golang-go \
+        git
 
-ADD build/haproxy.cfg /etc/haproxy/haproxy.cfg
-ADD build/start.bash /haproxy-start
+WORKDIR /opt
+RUN \
+    mkdir hadiscover; cd hadiscover; \
+    export GOPATH=`pwd`; \
+    go get github.com/adetante/hadiscover
 
-VOLUME ["/haproxy-override"]
+RUN sed -i 's/^ENABLED=.*/ENABLED=1/' /etc/default/haproxy
+ADD build/haproxy.cfg.tpl /etc/haproxy/haproxy.cfg.tpl
 
-WORKDIR /etc/haproxy
+RUN mkdir /etc/service/hadiscover
+ADD build/hadiscover.sh /etc/service/hadiscover/run
+RUN chmod +x /etc/service/hadiscover/run
 
-CMD ["bash", "/haproxy-start"]
-
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443 8080 8443
 # End Haproxy
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
