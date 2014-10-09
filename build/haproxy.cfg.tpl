@@ -8,11 +8,13 @@ global
 defaults
     log global
     mode http
+    option forwardfor
+    option http-server-close
     option httplog
     option dontlognull
     retries 3
     redispatch
-    maxconn 2000
+    maxconn 2048
     contimeout 5000
     clitimeout 50000
     srvtimeout 50000
@@ -24,10 +26,17 @@ defaults
     errorfile 503 /etc/haproxy/errors/503.http
     errorfile 504 /etc/haproxy/errors/504.http
 
-frontend http-in
-    bind *:80
-    default_backend http-backend
+frontend www-http
+    bind haproxy_www_public_IP:80
+    reqadd X-Forwarded-Proto:\ http
+    default_backend www-backend
 
-backend http-backend
-{{range .}}     server {{.Name}} {{.Ip}}:{{.Port}} maxconn 32
+frontend www-https
+   bind haproxy_www_public_IP:443 ssl crt /etc/ssl/private/example.com.pem
+   reqadd X-Forwarded-Proto:\ https
+   default_backend www-backend
+
+backend www-backend
+    redirect scheme https if !{ ssl_fc }
+{{range .}}     server {{.Name}} {{.Ip}}:{{.Port}} check maxconn 32
 {{end}}
