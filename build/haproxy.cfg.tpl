@@ -26,6 +26,14 @@ defaults
     errorfile 503 /etc/haproxy/errors/503.http
     errorfile 504 /etc/haproxy/errors/504.http
 
+listen stats :1936
+   stats enable   
+   stats scope www-http
+   stats scope www-backend
+   stats uri /
+   stats realm Haproxy\ Statistics
+   stats auth user:password
+
 frontend www-http
     bind haproxy_www_public_IP:80
     reqadd X-Forwarded-Proto:\ http
